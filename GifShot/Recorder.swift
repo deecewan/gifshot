@@ -9,14 +9,29 @@
 import Foundation
 import AVFoundation
 import NSGIF2
+import Cocoa
 
 class Recorder: NSObject, AVCaptureFileOutputRecordingDelegate {
     
     var recordingSession: AVCaptureSession?;
-    var destinationUrl: URL = URL(fileURLWithPath: "/Users/david/gifs/4.mov");
+    var destinationUrl: URL = URL(fileURLWithPath: "/Users/david/gifs/5.mov");
     var movieOutput: AVCaptureMovieFileOutput?;
+    var screenshotWindow: ScreenshotWindow!;
     
-    func startRecording() {
+    func preRecord(){
+        let windowRect = NSMakeRect(0, 0, NSScreen.main()!.frame.size.width, NSScreen.main()!.frame.size.height)
+        
+        if screenshotWindow == nil {
+            screenshotWindow = ScreenshotWindow(window: NSWindow(contentRect: windowRect, styleMask: NSBorderlessWindowMask, backing: NSBackingStoreType.buffered, defer: false))
+        }
+        
+        screenshotWindow!.showWindow(self);
+        screenshotWindow.visibliseWindow();
+        NSApp.activate(ignoringOtherApps: true);
+        
+    }
+    
+    func startRecording(x: Float, y: Float, width: Float, height: Float) {
         recordingSession = AVCaptureSession();
         recordingSession?.sessionPreset = AVCaptureSessionPresetHigh;
         let displayId: CGDirectDisplayID = CGDirectDisplayID(CGMainDisplayID());
@@ -43,12 +58,22 @@ class Recorder: NSObject, AVCaptureFileOutputRecordingDelegate {
     }
     
     func complete(url: URL?) {
+        
+        let pb = NSPasteboard.general();
+        if let nofElements = pb.pasteboardItems?.count {
+            if nofElements > 0 {
+                for element in pb.pasteboardItems! {
+                    print(element);
+                    print(element.types);
+                }
+            }
+        }
+        
         print(url);
         var data: Data;
         do {
             data = try Data(contentsOf: url!);
-            NSPasteboard.general().setData(data, forType:NSTIFFPboardType);
-            NSPasteboard.general().setString("This is a test", forType: NSStringPboardType)
+            NSPasteboard.general().setData(data, forType:"public.file-url");
             print("item on clipboard");
         } catch {
             print("uh-oh");
@@ -61,7 +86,14 @@ class Recorder: NSObject, AVCaptureFileOutputRecordingDelegate {
         let outputPath = destinationUrl.deletingPathExtension().appendingPathExtension("gif");
         let request = NSGIFRequest(sourceVideo: destinationUrl, destination: outputPath);
         
-        NSGIF.create(request, completion: complete);
+        NSGIF.create(request, completion: complete);        
+    }
+    
+    func cancelRecording() {
+        if screenshotWindow != nil {
+            // fade it out
+            screenshotWindow.hideWindow();
+        }
     }
     
     func capture(_ captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAt outputFileURL: URL!, fromConnections connections: [Any]!, error: Error!) {
