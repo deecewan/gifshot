@@ -56,8 +56,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             recording = false;
             recordingButton.title = "Start Recording";
-            // recorder.stopRecording();
-            recorder.cancelRecording();
+            recorder.stopRecording();
+            // recorder.cancelRecording();
         }
         setStatusIcon();
         

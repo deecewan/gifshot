@@ -16,6 +16,7 @@
 		6302008C1DA4AAF3001308FB /* GifShotUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6302008B1DA4AAF3001308FB /* GifShotUITests.swift */; };
 		632692C51DA53AAB00DFC2FE /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632692C41DA53AAB00DFC2FE /* Recorder.swift */; };
 		635BFE7C1DA6566D00B0E13A /* ScreenshotWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635BFE7B1DA6566D00B0E13A /* ScreenshotWindow.swift */; };
+		6383C2AE1DA66EDF00534A14 /* CropRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6383C2AD1DA66EDF00534A14 /* CropRect.swift */; };
 		CE5E16F2436148B20E31A47C /* Pods_GifShotTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3679722B3CE4F2373E3C6E64 /* Pods_GifShotTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,7 @@
 		632692C31DA526A100DFC2FE /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		632692C41DA53AAB00DFC2FE /* Recorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
 		635BFE7B1DA6566D00B0E13A /* ScreenshotWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenshotWindow.swift; sourceTree = "<group>"; };
+		6383C2AD1DA66EDF00534A14 /* CropRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropRect.swift; sourceTree = "<group>"; };
 		653E0DD32456154BF31A4CDE /* Pods_GifShotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GifShotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AC4C42BE438B5BB2687D25F /* Pods_GifShot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GifShot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		734092C51119DE4FBB449FC0 /* Pods-GifShotTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GifShotTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GifShotTests/Pods-GifShotTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				630200771DA4AAF3001308FB /* Info.plist */,
 				632692C41DA53AAB00DFC2FE /* Recorder.swift */,
 				635BFE7B1DA6566D00B0E13A /* ScreenshotWindow.swift */,
+				6383C2AD1DA66EDF00534A14 /* CropRect.swift */,
 			);
 			path = GifShot;
 			sourceTree = "<group>";
@@ -450,6 +453,7 @@
 				630200711DA4AAF3001308FB /* AppDelegate.swift in Sources */,
 				635BFE7C1DA6566D00B0E13A /* ScreenshotWindow.swift in Sources */,
 				632692C51DA53AAB00DFC2FE /* Recorder.swift in Sources */,
+				6383C2AE1DA66EDF00534A14 /* CropRect.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

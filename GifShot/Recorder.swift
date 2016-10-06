@@ -14,7 +14,7 @@ import Cocoa
 class Recorder: NSObject, AVCaptureFileOutputRecordingDelegate {
     
     var recordingSession: AVCaptureSession?;
-    var destinationUrl: URL = URL(fileURLWithPath: "/Users/david/gifs/5.mov");
+    var destinationUrl: URL?;
     var movieOutput: AVCaptureMovieFileOutput?;
     var screenshotWindow: ScreenshotWindow!;
     
@@ -26,19 +26,23 @@ class Recorder: NSObject, AVCaptureFileOutputRecordingDelegate {
         }
         
         screenshotWindow!.showWindow(self);
+        screenshotWindow.recorder = self;
         screenshotWindow.visibliseWindow();
         NSApp.activate(ignoringOtherApps: true);
         
     }
     
-    func startRecording(x: Float, y: Float, width: Float, height: Float) {
+    func startRecording(x: Double, y: Double, width: Double, height: Double) {
+        // disable mouse interaction with the window
+        screenshotWindow.ignoreClicks();
+        destinationUrl = URL(fileURLWithPath: "/Users/david/gifs/\(NSUUID().uuidString).mov");
         recordingSession = AVCaptureSession();
         recordingSession?.sessionPreset = AVCaptureSessionPresetHigh;
         let displayId: CGDirectDisplayID = CGDirectDisplayID(CGMainDisplayID());
         let input: AVCaptureScreenInput = AVCaptureScreenInput(displayID: displayId);
         input.capturesCursor = true;
         input.capturesMouseClicks = true;
-        let boundingRect = CGRect(x: 100, y: 100, width: 500, height: 500);
+        let boundingRect = CGRect(x: x + 1, y: y + 1, width: width - 1, height: height - 1);
         input.cropRect = boundingRect;
         print("Looking good so far.");
         
@@ -78,12 +82,14 @@ class Recorder: NSObject, AVCaptureFileOutputRecordingDelegate {
         } catch {
             print("uh-oh");
         }
+        cancelRecording();
     }
     
     func stopRecording() {
+        print("recording stopped");
         movieOutput?.stopRecording();
         recordingSession?.stopRunning();
-        let outputPath = destinationUrl.deletingPathExtension().appendingPathExtension("gif");
+        let outputPath = destinationUrl!.deletingPathExtension().appendingPathExtension("gif");
         let request = NSGIFRequest(sourceVideo: destinationUrl, destination: outputPath);
         
         NSGIF.create(request, completion: complete);        
@@ -92,6 +98,7 @@ class Recorder: NSObject, AVCaptureFileOutputRecordingDelegate {
     func cancelRecording() {
         if screenshotWindow != nil {
             // fade it out
+            screenshotWindow.listenClicks();
             screenshotWindow.hideWindow();
         }
     }

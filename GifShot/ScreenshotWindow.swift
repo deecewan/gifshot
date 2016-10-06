@@ -12,17 +12,26 @@ import QuartzCore
 
 class ScreenshotWindow: NSWindowController, NSWindowDelegate {
     
-    var screens: Array<NSRect> = [];
+    var recorder: Recorder?;
+    var croppingRect: CropRect!;
     
     override init(window: NSWindow!) {
         super.init(window: window);
         window.delegate = self;
         window.isReleasedWhenClosed = false;
-        window.collectionBehavior = NSWindowCollectionBehavior.canJoinAllSpaces;
+        // window.collectionBehavior = NSWindowCollectionBehavior.canJoinAllSpaces;
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    func ignoreClicks() {
+        window!.ignoresMouseEvents = true;
+    }
+    
+    func listenClicks() {
+        window!.ignoresMouseEvents = false;
     }
     
     func visibliseWindow() {
@@ -31,7 +40,12 @@ class ScreenshotWindow: NSWindowController, NSWindowDelegate {
         // Set level to screensaver level
         window!.level = 1000
         window!.backgroundColor = NSColor.white;
-        window!.animator().alphaValue = 0.3;
+        window!.animator().alphaValue = 0.5;
+        croppingRect = CropRect(frame: window!.frame);
+        if recorder != nil {
+            croppingRect.recorder = recorder;
+        }
+        window!.contentView = croppingRect!;
     }
     
     func closeWindow() {
